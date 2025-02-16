@@ -26,44 +26,6 @@ const getProps = (node) => {
   };
 };
 
-/*
-
-Usage:
------------------------------
-
-import React from "react";
-import { RenderGLB } from "./RenderGLB";
-import { useAttach } from "core/src/templates/3d-scene-builder/hooks/useAttach";
-import * as THREE from "three";
-
-const glb = "assets/windmill.glb";
-
-export const Windmill = ({ parts, ...props }) => {
-  const { isAttached } = useAttach(parts);
-
-  const custom = {
-    ["box_left"]: (Node) => (
-      <Node>
-        <meshStandardMaterial
-          transparent
-          opacity={0.1}
-          side={THREE.DoubleSide}
-        />
-      </Node>
-    ),
-    ["blades"]: (Node) => (
-      <Node scale={0.1} visible={isAttached("id_lopasti")} />
-    ),
-    ["rotator"]: (Node) => <Node visible={isAttached("id_system")} />,
-    ["generator"]: (Node) => <Node visible={isAttached("id_generator")} />,
-    ["val"]: (Node) => <Node visible={isAttached("id_glav_val")} />,
-  };
-
-  return <RenderGLB path={glb} {...props} custom={custom} />;
-};
-
-*/
-
 export const ManagedGLB = forwardRef(
   (
     {
