@@ -1,0 +1,34 @@
+{
+  "name": "managed-glb",
+  "version": "1.0.0",
+  "description": "Wrapper around the gbl/gltf loader that allows handling and customizing only selected nodes in JSX instead of generating the full JSX file.",
+  "keywords": [
+    "react",
+    "threejs",
+    "glb",
+    "drei",
+    "r3f",
+    "fiber",
+    "three",
+    "gltf",
+    "managed",
+    "controlled",
+    "handler",
+    "jsx"
+  ],
+  "homepage": "https://github.com/dsdevgit/r3f-glb-handler#readme",
+  "bugs": {
+    "url": "https://github.com/dsdevgit/r3f-glb-handler/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dsdevgit/r3f-glb-handler.git"
+  },
+  "license": "MIT",
+  "author": "Dennis Sadovsky",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
