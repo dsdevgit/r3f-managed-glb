@@ -2,7 +2,7 @@
 
 Wrapper around the gbl/gltf loader that allows handling and customizing only selected nodes in JSX instead of generating the full JSX file.
 
-Operating nodes:
+Handling the nodes:
 
 ```javascript
 import React from "react";
@@ -23,17 +23,20 @@ export const MyModel = (props) => {
         />
       </Node>
     ),
+
     // change scale (position, rotation, etc.):
     ["node_002"]: (Node) => <Node scale={0.1} />,
+
     // remove node:
     ["node_003"]: () => null,
-    // hade node:
+
+    // hide node:
     ["node_004"]: (Node) => <Node visible={false} />,
+
     // dublicate node:
     ["node_005"]: (Node, node) => {
       const pos = [...node.position];
       pos[1] += 2;
-
       return (
         <>
           <Node />
@@ -43,7 +46,7 @@ export const MyModel = (props) => {
     },
   };
 
-  return <ManagedGLB path={glb} custom={custom} {...props} />;
+  return <ManagedGLB src={glb} custom={custom} {...props} />;
 };
 ```
 
@@ -53,13 +56,13 @@ Play animations from glb:
 import { ManagedGLB } from "./ManagedGLB";
 import React, { useRef } from "react";
 
-const glb = "assets/anim.glb";
+const glb = "assets/animated_model.glb";
 
 export const Anim = ({ parts, ...props }) => {
   const actionsRef = useRef();
 
   const custom = {
-    ["Cube"]: (Node) => (
+    ["node_001"]: (Node) => (
       <Node onClick={() => actionsRef.current["my_action"].play()} />
     ),
   };
@@ -67,7 +70,7 @@ export const Anim = ({ parts, ...props }) => {
   return (
     <ManagedGLB
       onInit={({ actions }) => (actionsRef.current = actions)}
-      path={glb}
+      src={glb}
       custom={custom}
       {...props}
     />

@@ -31,7 +31,7 @@ export const ManagedGLB = forwardRef(
   (
     {
       custom = {},
-      path,
+      src,
       debug,
       onInit,
       castShadow = true,
@@ -41,7 +41,7 @@ export const ManagedGLB = forwardRef(
     fwdRef
   ) => {
     const sceneRef = useRef();
-    const { scene, animations } = useGLTF(path);
+    const { scene, animations } = useGLTF(src);
     const { actions } = useAnimations(animations, sceneRef);
 
     useEffect(() => {
