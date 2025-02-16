@@ -2,6 +2,8 @@
 
 Wrapper around the gbl/gltf loader that allows handling and customizing only selected nodes in JSX instead of generating the full JSX file.
 
+Operating nodes:
+
 ```javascript
 import React from "react";
 import { ManagedGLB } from "r3f-managed-glb";
@@ -41,7 +43,35 @@ export const MyModel = (props) => {
     },
   };
 
-  return <ManagedGLB path={glb} {...props} custom={custom} />;
+  return <ManagedGLB path={glb} custom={custom} {...props} />;
+};
+```
+
+Play animations from glb:
+
+```javascript
+import { ManagedGLB } from "./ManagedGLB";
+import React, { useRef } from "react";
+
+const glb = "assets/anim.glb";
+
+export const Anim = ({ parts, ...props }) => {
+  const actionsRef = useRef();
+
+  const custom = {
+    ["Cube"]: (Node) => (
+      <Node onClick={() => actionsRef.current["my_action"].play()} />
+    ),
+  };
+
+  return (
+    <ManagedGLB
+      onInit={({ actions }) => (actionsRef.current = actions)}
+      path={glb}
+      custom={custom}
+      {...props}
+    />
+  );
 };
 ```
 

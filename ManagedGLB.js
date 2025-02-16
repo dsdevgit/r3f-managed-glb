@@ -1,7 +1,8 @@
-import React, { useEffect, forwardRef } from "react";
-import { useGLTF } from "@react-three/drei";
+import React, { useEffect, forwardRef, useRef } from "react";
+import { useGLTF, useAnimations } from "@react-three/drei";
 
 const getProps = (node) => {
+  // return node;
   return {
     name: node.name,
     animations: node.animations,
@@ -39,21 +40,29 @@ export const ManagedGLB = forwardRef(
     },
     fwdRef
   ) => {
-    const { scene } = useGLTF(path);
+    const sceneRef = useRef();
+    const { scene, animations } = useGLTF(path);
+    const { actions } = useAnimations(animations, sceneRef);
 
     useEffect(() => {
       if (scene) {
-        onInit?.(scene);
+        onInit?.({ scene, animations, actions });
       }
     }, [scene]);
 
     if (debug) console.log(scene);
 
+    // to attach {fwdRef} and {sceneRef} to the root node of the scene
+    const setSceneRefs = (element) => {
+      if (fwdRef) fwdRef.current = element;
+      sceneRef.current = element;
+    };
+
     const renderNode = (node) => {
       const customRender = custom[node.name];
 
       const extraProps =
-        node.name === scene.name ? { ...props, ref: fwdRef } : {}; // provide main props to the root node
+        node.name === scene.name ? { ...props, ref: setSceneRefs } : {};
 
       const nodeProps = {
         ...getProps(node),
@@ -62,12 +71,14 @@ export const ManagedGLB = forwardRef(
         ...extraProps,
       };
 
-      const RGroup = forwardRef(({ children, ...prs }, ref) => (
-        <group ref={ref} key={node.name} {...nodeProps} {...prs}>
-          {renderChildren()}
-          {children}
-        </group>
-      ));
+      const RGroup = forwardRef(({ children, ...prs }, ref) => {
+        return (
+          <group ref={ref} key={node.name} {...nodeProps} {...prs}>
+            {renderChildren()}
+            {children}
+          </group>
+        );
+      });
 
       const RMesh = forwardRef(({ children, ...prs }, ref) => (
         <mesh ref={ref} key={node.name} {...nodeProps} {...prs}>
