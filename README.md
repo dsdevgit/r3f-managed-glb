@@ -1,4 +1,4 @@
-# r3f-glb-handler
+# Managed GLB for React Three Fiber
 
 Wrapper around the gbl/gltf loader that allows handling and customizing only selected nodes in JSX instead of generating the full JSX file.
 
@@ -45,4 +45,4 @@ export const MyModel = (props) => {
 };
 ```
 
-TODO props, refs, stuct of {custom}, add demo
+TODO props, refs, stuct of {custom}, add demo, publish npm package
