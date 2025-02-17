@@ -79,4 +79,5 @@ export const Anim = ({ parts, ...props }) => {
 ```
 
 TODO readme: props, refs, stuct of {custom}
+
 TODO project: webpack cfg, publish npm package, add demo
