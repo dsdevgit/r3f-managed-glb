@@ -1,4 +1,4 @@
-# Managed GLB for React Three Fiber
+# Managed GLB for React Three Fiber (WIP)
 
 Wrapper around the gbl/gltf loader that allows handling and customizing only selected nodes in JSX instead of generating the full JSX file.
 
@@ -78,4 +78,5 @@ export const Anim = ({ parts, ...props }) => {
 };
 ```
 
-TODO props, refs, stuct of {custom}, add demo, publish npm package
+TODO readme: props, refs, stuct of {custom}
+TODO project: webpack cfg, publish npm package, add demo

@@ -27,11 +27,13 @@ const getProps = (node) => {
   };
 };
 
+export const preloadGLB = (glb) => useGLTF.preload(glb);
+
 export const ManagedGLB = forwardRef(
   (
     {
       custom = {},
-      src,
+      path,
       debug,
       onInit,
       castShadow = true,
@@ -41,7 +43,7 @@ export const ManagedGLB = forwardRef(
     fwdRef
   ) => {
     const sceneRef = useRef();
-    const { scene, animations } = useGLTF(src);
+    const { scene, animations } = useGLTF(path);
     const { actions } = useAnimations(animations, sceneRef);
 
     useEffect(() => {
@@ -62,7 +64,9 @@ export const ManagedGLB = forwardRef(
       const customRender = custom[node.name];
 
       const extraProps =
-        node.name === scene.name ? { ...props, ref: setSceneRefs } : {};
+        node.name === scene.name
+          ? { ...props, ref: setSceneRefs, dispose: null } // dispose  on the scene?
+          : {};
 
       const nodeProps = {
         ...getProps(node),
@@ -90,10 +94,10 @@ export const ManagedGLB = forwardRef(
       const renderChildren = () => node.children.map(renderNode);
 
       if (node.isMesh) {
-        return customRender?.(RMesh, node) ?? <RMesh />;
+        return customRender ? customRender(RMesh, node) : <RMesh />;
       }
 
-      return customRender?.(RGroup, node) ?? <RGroup />;
+      return customRender ? customRender(RGroup, node) : <RGroup />;
     };
 
     return renderNode(scene);

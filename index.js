@@ -1,1 +1,1 @@
-export { ManagedGLB } from "./ManagedGLB";
+export { ManagedGLB, preloadGLB } from "./ManagedGLB";
