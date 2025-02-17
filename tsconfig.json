@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "./dist",
+    "module": "esnext",
+    "target": "es6",
+    "lib": ["dom", "es6"],
+    "jsx": "react-jsx",
+    "declaration": true,
+    "declarationDir": "./dist/types",
+    "strict": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "types": ["@react-three/fiber", "@react-spring/core", "@types/three"],
+    "paths": {
+      "three/webgpu": ["node_modules/@types/three/build/three.webgpu.d.ts"]
+    }
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}
