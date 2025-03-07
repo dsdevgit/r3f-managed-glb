@@ -32,7 +32,7 @@ const getProps = (node: THREE.Object3D) => {
 
 export const preloadGLB = (glb: string) => useGLTF.preload(glb);
 
-export const ManagedGLB = forwardRef<THREE.Group, ManagedGLBProps>(
+export const ManagedGLB = forwardRef<THREE.Object3D<THREE.Object3DEventMap>, ManagedGLBProps>(
   (
     { custom = {}, path, debug, onInit, castShadow = true, receiveShadow = true, ...props },
     fwdRef

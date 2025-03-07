@@ -2,6 +2,7 @@
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "isolatedModules": true,
+    "allowJs": true,
     "baseUrl": ".",
     "outDir": "./dist",
     "module": "esnext",
@@ -31,6 +32,6 @@
     }
   },
   "typeRoots": ["node_modules/@types", "src/types.ts"],
-  "include": ["node_modules, src"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules"]
 }
