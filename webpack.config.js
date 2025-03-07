@@ -1,12 +1,12 @@
-import path from "path";
+import path from 'path';
 
 export default {
-  entry: "./src/index.ts",
+  entry: './src/index.ts',
   output: {
-    path: path.resolve("dist"),
-    filename: "index.ts",
-    library: "ManagedGLB",
-    libraryTarget: "umd",
+    path: path.resolve('dist'),
+    filename: 'index.ts',
+    library: 'ManagedGLB',
+    libraryTarget: 'umd'
   },
   module: {
     rules: [
@@ -14,17 +14,22 @@ export default {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
-        },
-      },
-    ],
+          loader: 'babel-loader'
+        }
+      }
+    ]
   },
   experiments: {
-    outputModule: true,
+    outputModule: true
   },
+  // plugins: [
+  //   new webpack.ProvidePlugin({
+  //     React: 'react'
+  //   })
+  // ],
   externals: {
-    react: "react",
-    "react-dom": "react-dom",
-    "@react-three/drei": "@react-three/drei",
-  },
+    react: 'react',
+    'react-dom': 'react-dom',
+    '@react-three/drei': '@react-three/drei'
+  }
 };

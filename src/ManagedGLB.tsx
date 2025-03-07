@@ -1,8 +1,8 @@
-import React, { useEffect, forwardRef, useRef } from "react";
-import { useGLTF, useAnimations } from "@react-three/drei";
-import { RGroupProps, RMeshProps, ManagedGLBProps, GLTFResult } from "./types";
+import { useEffect, forwardRef, useRef } from 'react';
+import { useGLTF, useAnimations } from '@react-three/drei';
+import { RGroupProps, RMeshProps, ManagedGLBProps } from './types';
 
-import * as THREE from "three";
+import * as THREE from 'three';
 
 const getProps = (node: THREE.Object3D) => {
   return {
@@ -26,7 +26,7 @@ const getProps = (node: THREE.Object3D) => {
     visible: node.visible,
     uuid: node.uuid,
     // @ts-ignore
-    geometry: node.geometry,
+    geometry: node.geometry
   };
 };
 
@@ -34,15 +34,7 @@ export const preloadGLB = (glb: string) => useGLTF.preload(glb);
 
 export const ManagedGLB = forwardRef<THREE.Group, ManagedGLBProps>(
   (
-    {
-      custom = {},
-      path,
-      debug,
-      onInit,
-      castShadow = true,
-      recieveShadow = true,
-      ...props
-    },
+    { custom = {}, path, debug, onInit, castShadow = true, receiveShadow = true, ...props },
     fwdRef
   ) => {
     const sceneRef = useRef<THREE.Object3D>(null);
@@ -68,36 +60,30 @@ export const ManagedGLB = forwardRef<THREE.Group, ManagedGLBProps>(
       const customRender = custom[node.name];
 
       const extraProps =
-        node.name === scene.name
-          ? { ...props, ref: setSceneRefs, dispose: null }
-          : {};
+        node.name === scene.name ? { ...props, ref: setSceneRefs, dispose: null } : {};
 
       const nodeProps = {
         ...getProps(node),
         ...castShadow,
-        ...recieveShadow,
-        ...extraProps,
+        ...receiveShadow,
+        ...extraProps
       };
 
-      const RGroup = forwardRef<RGroupProps, RGroupProps>(
-        ({ children, ...prs }, ref) => {
-          return (
-            <group ref={ref} key={node.name} {...nodeProps} {...prs}>
-              {renderChildren()}
-              {children}
-            </group>
-          );
-        }
-      );
-
-      const RMesh = forwardRef<RMeshProps, RMeshProps>(
-        ({ children, ...prs }, ref) => (
-          <mesh ref={ref} key={node.name} {...nodeProps} {...prs}>
+      const RGroup = forwardRef<RGroupProps, RGroupProps>(({ children, ...prs }, ref) => {
+        return (
+          <group ref={ref} key={node.name} {...nodeProps} {...prs}>
             {renderChildren()}
             {children}
-          </mesh>
-        )
-      );
+          </group>
+        );
+      });
+
+      const RMesh = forwardRef<RMeshProps, RMeshProps>(({ children, ...prs }, ref) => (
+        <mesh ref={ref} key={node.name} {...nodeProps} {...prs}>
+          {renderChildren()}
+          {children}
+        </mesh>
+      ));
 
       const renderChildren = () => node.children.map(renderNode);
       // @ts-ignore

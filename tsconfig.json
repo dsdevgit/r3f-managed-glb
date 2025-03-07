@@ -1,10 +1,12 @@
 {
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "isolatedModules": true,
     "baseUrl": ".",
     "outDir": "./dist",
     "module": "esnext",
-    "target": "es6",
-    "lib": ["dom", "es6"],
+    "target": "es2015",
+    "lib": ["dom", "esnext"],
     "jsx": "react-jsx",
     "declaration": true,
     "declarationDir": "./dist/types",
@@ -12,12 +14,23 @@
     "esModuleInterop": true,
     "moduleResolution": "node",
     "skipLibCheck": true,
+    "noEmitOnError": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "pretty": true,
+    "removeComments": false,
+    "useDefineForClassFields": true,
+    "composite": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": true,
+    "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
     "types": ["@react-three/fiber", "@react-spring/core", "@types/three"],
     "paths": {
       "three/webgpu": ["node_modules/@types/three/build/three.webgpu.d.ts"]
     }
   },
-  "include": ["src"],
+  "typeRoots": ["node_modules/@types", "src/types.ts"],
+  "include": ["node_modules, src"],
   "exclude": ["node_modules"]
 }

@@ -1,7 +1,7 @@
-import { ReactNode } from "react";
-import { ThreeElements } from "@react-three/fiber";
-import * as THREE from "three";
-import { GLTF } from "three/examples/jsm/loaders/GLTFLoader";
+import { ReactNode } from 'react';
+import { ThreeElements } from '@react-three/fiber';
+import * as THREE from 'three';
+import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 
 declare global {
   namespace React {
