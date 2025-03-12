@@ -11,11 +11,14 @@ export default defineConfig({
       fileName: (format) => `index.${format}.js`
     },
     rollupOptions: {
-      external: ['react', 'react-dom'],
+      external: ['react', 'react-dom', '@react-three/fiber', '@react-three/drei', 'three'],
       output: {
         globals: {
           react: 'React',
-          'react-dom': 'ReactDOM'
+          'react-dom': 'ReactDOM',
+          '@react-three/fiber': 'ReactThreeFiber',
+          '@react-three/drei': 'ReactThreeDrei',
+          three: 'THREE'
         }
       }
     }

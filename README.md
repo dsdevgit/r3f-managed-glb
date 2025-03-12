@@ -1,9 +1,20 @@
-# Managed GLB for React Three Fiber (WIP)
+# Managed GLB for React Three Fiber
 
 Wrapper around the gbl/gltf loader that allows handling and customizing only selected nodes in JSX
 instead of generating the full JSX file.
 
-Handling the nodes:
+## How to handling nodes:
+
+The render function will called with 2 arguments: Node - Node component (Mesh or Group) node -
+threejs node object
+
+You able to override any props of the actual {Node}, set or get variables directly from {node}
+object or just replace the node with anything you like. Just provide the {custom} prop contains the
+struct with description of those nodes
+
+```
+ ['<node_name>'] : (Node, node) => (<Node />)  // render function
+```
 
 ```javascript
 import React from 'react';
@@ -47,7 +58,7 @@ export const MyModel = (props) => {
 };
 ```
 
-Play animations from glb:
+## How to play animations from glb file:
 
 ```javascript
 import { ManagedGLB } from './ManagedGLB';
@@ -73,11 +84,14 @@ export const Anim = ({ parts, ...props }) => {
 };
 ```
 
-Building:
+## How to build the package:
 
-1. yarn
-2. yarn build
+1. `git clone git@github.com:dsdevgit/r3f-managed-glb.git`
+2. `cd r3f-managed-glb`
+3. `yarn`
+4. `yarn build`
 
-TODO readme: props, refs, stuct of {custom}
+## TODO:
 
-TODO project: webpack cfg, publish npm package, add demo
+1. Update to 1.1.0 to support the multiply node selection
+2. Update readme
