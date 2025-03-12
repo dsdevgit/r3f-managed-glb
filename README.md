@@ -1,3 +1,5 @@
+<center><img src="assets/logo.jpg" alt="Managed GLB" height="200"/></center>
+
 # Managed GLB for React Three Fiber
 
 Wrapper around the gbl/gltf loader that allows handling and customizing only selected nodes in JSX
