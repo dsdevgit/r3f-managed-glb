@@ -3,7 +3,21 @@
 Wrapper around the gbl/gltf loader that allows handling and customizing only selected nodes in JSX
 instead of generating the full JSX file.
 
-## How to handling nodes:
+# Installation
+
+```bash
+npm i --save r3f-managed-glb
+
+yarn add r3f-managed-glb
+```
+
+```javascript
+import { ManagedGLB, meshesInNodeByCount, preloadGLB } from 'r3f-managed-glb';
+```
+
+# Usage
+
+## Handling nodes:
 
 The render function will called with 2 arguments:
 
@@ -20,7 +34,7 @@ struct with description of those nodes
 
 ```javascript
 import React from 'react';
-import { ManagedGLB } from 'r3f-managed-glb';
+import { ManagedGLB, meshesInNodeByCount, preloadGLB } from 'r3f-managed-glb';
 import * as THREE from 'three';
 
 const glb = 'assets/model.glb';
@@ -74,7 +88,7 @@ export const MyModel = (props) => {
 preloadGLB(glb); // optional, just useGLTF.preload() function
 ```
 
-## How to play animations from glb file:
+## Play animations from glb file:
 
 ```javascript
 import { ManagedGLB } from './ManagedGLB';
@@ -100,7 +114,7 @@ export const Anim = ({ parts, ...props }) => {
 };
 ```
 
-## How to build the package:
+# Build package
 
 1. `git clone git@github.com:dsdevgit/r3f-managed-glb.git`
 2. `cd r3f-managed-glb`
