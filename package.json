@@ -1,6 +1,6 @@
 {
   "name": "r3f-managed-glb",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Wrapper around the gbl/gltf loader that allows handling and customizing only selected nodes in JSX instead of generating the full JSX file.",
   "keywords": [
     "react",
@@ -31,6 +31,9 @@
     "build": "vite build",
     "serve": "vite preview"
   },
+  "main": "dist/index.umd.js",
+  "module": "dist/index.es.js",
+  "types": "dist/index.d.ts",
   "dependencies": {
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
