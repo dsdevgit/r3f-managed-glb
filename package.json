@@ -16,13 +16,13 @@
     "handler",
     "jsx"
   ],
-  "homepage": "https://github.com/dsdevgit/r3f-glb-handler#readme",
+  "homepage": "https://github.com/dsdevgit/r3f-managed-glb#readme",
   "bugs": {
-    "url": "https://github.com/dsdevgit/r3f-glb-handler/issues"
+    "url": "https://github.com/dsdevgit/r3f-managed-glb/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dsdevgit/r3f-glb-handler.git"
+    "url": "git+https://github.com/dsdevgit/r3f-managed-glb.git"
   },
   "license": "MIT",
   "author": "Dennis Sadovsky",
