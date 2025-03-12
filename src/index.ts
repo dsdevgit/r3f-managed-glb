@@ -1,1 +1,3 @@
-export { ManagedGLB, preloadGLB } from "./ManagedGLB";
+import { ManagedGLB } from './ManagedGLB';
+
+export { ManagedGLB };
