@@ -1,0 +1,10 @@
+{
+  "root": [
+    "./src/index.ts",
+    "./src/main.tsx",
+    "./src/vite-env.d.ts",
+    "./src/components/ManagedGLB.tsx"
+  ],
+  "errors": true,
+  "version": "5.7.3"
+}

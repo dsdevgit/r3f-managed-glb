@@ -1,37 +1,19 @@
 {
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "isolatedModules": true,
-    "allowJs": true,
-    "baseUrl": ".",
-    "outDir": "./dist",
-    "module": "esnext",
-    "target": "es2015",
-    "lib": ["dom", "esnext"],
-    "jsx": "react-jsx",
-    "declaration": true,
-    "declarationDir": "./dist/types",
-    "strict": true,
-    "esModuleInterop": true,
-    "moduleResolution": "node",
+    "target": "ESNext",
+    "module": "ESNext",
+    "lib": ["DOM", "ESNext"],
+    "allowJs": false,
     "skipLibCheck": true,
-    "noEmitOnError": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "pretty": true,
-    "removeComments": false,
-    "useDefineForClassFields": true,
-    "composite": true,
-    "declarationMap": true,
-    "emitDeclarationOnly": true,
-    "resolveJsonModule": true,
+    "esModuleInterop": false,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["@react-three/fiber", "@react-spring/core", "@types/three"],
-    "paths": {
-      "three/webgpu": ["node_modules/@types/three/build/three.webgpu.d.ts"]
-    }
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx"
   },
-  "typeRoots": ["node_modules/@types", "src/types.ts"],
-  "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "include": ["src"]
 }
