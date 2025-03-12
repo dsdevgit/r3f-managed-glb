@@ -5,8 +5,10 @@ instead of generating the full JSX file.
 
 ## How to handling nodes:
 
-The render function will called with 2 arguments: Node - Node component (Mesh or Group) node -
-threejs node object
+The render function will called with 2 arguments:
+
+- Node - Node component (Mesh or Group)
+- node - threejs node object
 
 You able to override any props of the actual {Node}, set or get variables directly from {node}
 object or just replace the node with anything you like. Just provide the {custom} prop contains the
@@ -22,6 +24,8 @@ import { ManagedGLB } from 'r3f-managed-glb';
 import * as THREE from 'three';
 
 const glb = 'assets/model.glb';
+
+const splitedMeshesSelector = meshesInNodeByCount('node', 5);
 
 export const MyModel = (props) => {
   const custom = {
@@ -41,6 +45,16 @@ export const MyModel = (props) => {
     // hide node:
     ['node_004']: (Node) => <Node visible={false} />,
 
+    // several nodes selection
+    ['node_4|node_5|node_6']: (Node) => <Node />,
+
+    // you can generate selector with function meshesInNodeByCount('node', 5) //(parentNodeName, children count), it return "node_1|node_2|node_3|node_4|node_5". It useful for meshes splited by glb format
+    [splitedMeshesSelector]: (Node) => (
+      <Node>
+        <meshStandardMaterial transparent opacity={0.1} side={THREE.DoubleSide} />
+      </Node>
+    ),
+
     // dublicate node:
     ['node_005']: (Node, node) => {
       const pos = [...node.position];
@@ -56,6 +70,8 @@ export const MyModel = (props) => {
 
   return <ManagedGLB src={glb} custom={custom} {...props} />;
 };
+
+preloadGLB(glb); // optional, just useGLTF.preload() function
 ```
 
 ## How to play animations from glb file:
@@ -93,5 +109,5 @@ export const Anim = ({ parts, ...props }) => {
 
 ## TODO:
 
-1. Update to 1.1.0 to support the multiply node selection
-2. Update readme
+- Update to 1.1.0 to support the multiply node selection
+- Update readme

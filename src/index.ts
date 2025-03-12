@@ -1,3 +1,3 @@
 import { ManagedGLB, preloadGLB } from './ManagedGLB';
-
-export { ManagedGLB, preloadGLB };
+import { meshesInNodeByCount } from './utils';
+export { ManagedGLB, preloadGLB, meshesInNodeByCount };
