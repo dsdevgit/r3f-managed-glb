@@ -1,4 +1,4 @@
-<center><img src="assets/logo.jpg" alt="Managed GLB" height="200"/></center>
+![logo](assets/logo.png)
 
 # Managed GLB for React Three Fiber
 
@@ -13,11 +13,11 @@ npm i --save r3f-managed-glb
 yarn add r3f-managed-glb
 ```
 
+# Usage
+
 ```javascript
 import { ManagedGLB, meshesInNodeByCount, preloadGLB } from 'r3f-managed-glb';
 ```
-
-# Usage
 
 ## Handling nodes:
 
