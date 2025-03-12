@@ -109,5 +109,5 @@ export const Anim = ({ parts, ...props }) => {
 
 ## TODO:
 
-- Update to 1.1.0 to support the multiply node selection
-- Update readme
+- Replace examples with TS version
+- Add Demo project
