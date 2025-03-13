@@ -26,6 +26,11 @@
   },
   "license": "MIT",
   "author": "Dennis Sadovsky",
+  "files": [
+    "dist",
+    "README.md",
+    "assets"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build",
