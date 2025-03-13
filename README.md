@@ -1,4 +1,4 @@
-![logo](assets/logo.png)
+![logo](assets/logo.jpg)
 
 # Managed GLB for React Three Fiber
 
