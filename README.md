@@ -30,8 +30,10 @@ You able to override any props of the actual {Node}, set or get variables direct
 object or just replace the node with anything you like. Just provide the {custom} prop contains the
 struct with description of those nodes
 
-```
- ['<node_name>'] : (Node, node) => (<Node />)  // render function
+```typescript
+type Custom = {
+  [key: string]: (Node: FC, node: THREE.Object3D) => ReactNode | null;
+};
 ```
 
 ```javascript
@@ -84,7 +86,7 @@ export const MyModel = (props) => {
     }
   };
 
-  return <ManagedGLB src={glb} custom={custom} {...props} />;
+  return <ManagedGLB castShadows recieveShadows path={glb} custom={custom} {...props} />;
 };
 
 preloadGLB(glb); // optional, just useGLTF.preload() function
@@ -122,8 +124,3 @@ export const Anim = ({ parts, ...props }) => {
 2. `cd r3f-managed-glb`
 3. `yarn`
 4. `yarn build`
-
-## TODO:
-
-- Replace examples with TS version
-- Add Demo project
