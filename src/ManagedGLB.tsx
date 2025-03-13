@@ -8,7 +8,7 @@ export const preloadGLB = (glb: string) => useGLTF.preload(glb);
 
 export const ManagedGLB = forwardRef<THREE.Object3D, ManagedGLBProps>((props, fwdRef) => {
   const { custom = {}, path, debug, onInit, castShadow = true, recieveShadow = true } = props;
-  const sceneRef = useRef<THREE.Object3D>(null);
+  const sceneRef = useRef<THREE.Object3D | null>(null);
 
   // @ts-ignore
   const { scene, animations } = useGLTF(path);
