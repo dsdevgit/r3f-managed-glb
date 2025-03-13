@@ -17,6 +17,22 @@ yarn add r3f-managed-glb
 
 ```javascript
 import { ManagedGLB, meshesInNodeByCount, preloadGLB } from 'r3f-managed-glb';
+
+// ....
+
+return <ManagedGLB castShadows recieveShadows path={glb} custom={custom} {...props} />;
+```
+
+```typescript
+interface ManagedGLBProps {
+  path: string; // path to glb file
+  custom?: Custom; // structure to customize nodes
+  onInit?: ({ scene, animations, actions }) => void; // callback on init, provides scene, animations, actions from glb scene
+  castShadow?: boolean; // set {castShadow} for all meshes (default=true)
+  receiveShadow?: boolean; // set {receiveShadow} for all meshes (default=true)
+  debug?: boolean; // console.log the Threejs scene object (default=false)
+  [key: string]: any; // other props for the root node
+}
 ```
 
 ## Handling nodes:
@@ -43,14 +59,18 @@ import * as THREE from 'three';
 
 const glb = 'assets/model.glb';
 
-const splitedMeshesSelector = meshesInNodeByCount('node', 5);
-
 export const MyModel = (props) => {
   const custom = {
-    // change material:
-    ['node_001']: (Node) => (
+    // override material :
+    ['node_001']: (Node, node) => (
       <Node>
-        <meshStandardMaterial transparent opacity={0.1} side={THREE.DoubleSide} />
+        <meshStandardMaterial transparent opacity={0.1} />
+      </Node>
+    ),
+    // or extend material ( you able to add {...node.material} to extend props of existing material)
+    ['node_001']: (Node, node) => (
+      <Node>
+        <meshStandardMaterial {...node.material} transparent opacity={0.1} />
       </Node>
     ),
 
@@ -66,8 +86,9 @@ export const MyModel = (props) => {
     // several nodes selection
     ['node_4|node_5|node_6']: (Node) => <Node />,
 
-    // you can generate selector with function meshesInNodeByCount('node', 5) //(parentNodeName, children count), it return "node_1|node_2|node_3|node_4|node_5". It useful for meshes splited by glb format
-    [splitedMeshesSelector]: (Node) => (
+    // you can generate selector with function meshesInNodeByCount('node', 5) //(parentNodeName, children count),
+    // it returns "node_1|node_2|node_3|node_4|node_5". It useful for meshes splited by glb format
+    [meshesInNodeByCount('node', 5)]: (Node) => (
       <Node>
         <meshStandardMaterial transparent opacity={0.1} side={THREE.DoubleSide} />
       </Node>
@@ -83,6 +104,12 @@ export const MyModel = (props) => {
           <Node position={pos} />
         </>
       );
+    }
+
+     // modify the Threejs node object directly (may not good idea):
+    ['node_006']: (Node, node) => {
+      node.position = [10,10,10]
+      return <Node />
     }
   };
 

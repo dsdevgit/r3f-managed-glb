@@ -40,7 +40,7 @@ export const getCustom = (name: string, custom: Custom) => {
   return found ? custom[found] : null;
 };
 
-export const meshesInNodeByCount = (nodeName: string, count = 10): string => {
+export const meshesInNodeByCount = (nodeName: string, count: number = 10): string => {
   return Array.apply(null, Array(count))
     .map((_, index) => nodeName + '_' + (index + 1))
     .join('|');
