@@ -2,12 +2,12 @@ import React, { useEffect, forwardRef, useRef, ReactNode } from 'react';
 import { useGLTF, useAnimations } from '@react-three/drei';
 import * as THREE from 'three';
 import { RGroupProps, RMeshProps, ManagedGLBProps } from './types';
-import { getCustom, extructProps } from './utils';
+import { getCustom, extractProps } from './utils';
 
 export const preloadGLB = (glb: string) => useGLTF.preload(glb);
 
 export const ManagedGLB = forwardRef<THREE.Object3D, ManagedGLBProps>((props, fwdRef) => {
-  const { custom = {}, path, debug, onInit, castShadow = true, recieveShadow = true } = props;
+  const { custom = {}, path, debug, onInit, castShadow = true, receiveShadow = true } = props;
   const sceneRef = useRef<THREE.Object3D | null>(null);
 
   // @ts-ignore
@@ -35,9 +35,9 @@ export const ManagedGLB = forwardRef<THREE.Object3D, ManagedGLBProps>((props, fw
       node.name === scene.name ? { ...props, ref: setSceneRefs, dispose: null } : {};
 
     const nodeProps = {
-      ...extructProps(node),
+      ...extractProps(node),
       ...castShadow,
-      ...recieveShadow,
+      ...receiveShadow,
       ...extraProps
     };
 

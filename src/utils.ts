@@ -1,7 +1,7 @@
 import { Custom } from './types';
 import * as THREE from 'three';
 
-export const extructProps = (node: THREE.Object3D) => {
+export const extractProps = (node: THREE.Object3D) => {
   // return node;
   return {
     name: node.name,

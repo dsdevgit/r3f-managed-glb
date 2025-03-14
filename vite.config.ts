@@ -22,5 +22,8 @@ export default defineConfig({
         }
       }
     }
+  },
+  optimizeDeps: {
+    exclude: ['react', 'react-dom', '@react-three/fiber', '@react-three/drei', 'three']
   }
 });
