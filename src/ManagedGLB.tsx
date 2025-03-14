@@ -41,7 +41,7 @@ export const ManagedGLB = forwardRef<THREE.Object3D, ManagedGLBProps>((props, fw
       ...extraProps
     };
 
-    const RGroup = forwardRef<RGroupProps, RGroupProps>(({ children, ...prs }, ref) => {
+    const RGroup = forwardRef<THREE.Group, RGroupProps>(({ children, ...prs }, ref) => {
       return (
         <group ref={ref} key={node.name} {...nodeProps} {...prs}>
           {renderChildren()}
@@ -50,7 +50,7 @@ export const ManagedGLB = forwardRef<THREE.Object3D, ManagedGLBProps>((props, fw
       );
     });
 
-    const RMesh = forwardRef<RMeshProps, RMeshProps>(({ children, ...prs }, ref) => (
+    const RMesh = forwardRef<THREE.Mesh, RMeshProps>(({ children, ...prs }, ref) => (
       <mesh ref={ref} key={node.name} {...nodeProps} {...prs}>
         {renderChildren()}
         {children}
