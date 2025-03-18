@@ -1,4 +1,4 @@
-import { useEffect, forwardRef, useRef, ReactElement, useMemo } from 'react';
+import React, { useEffect, forwardRef, useRef, ReactNode, ReactElement, useMemo } from 'react';
 import { useGLTF, useAnimations } from '@react-three/drei';
 import * as THREE from 'three';
 import { Object3DNode } from '@react-three/fiber';
@@ -75,13 +75,9 @@ export const ManagedGLB = forwardRef<THREE.Object3D, ManagedGLBProps>((props, fw
 
     const renderChildren = () => node.children.map(renderNode);
 
-    if ('isMesh' in node && node.isMesh) {
-      const result = customRender ? customRender(RMesh, node) : null;
-      return result ?? <RMesh />;
-    }
+    if (node instanceof THREE.Mesh) return customRender ? customRender(RMesh, node) : <RMesh />;
 
-    const result = customRender ? customRender(RGroup, node) : null;
-    return result ?? <RGroup />;
+    return customRender ? customRender(RGroup, node) : <RGroup />;
   };
 
   return renderNode(scene);
