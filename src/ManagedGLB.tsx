@@ -1,7 +1,8 @@
-import React, { useEffect, forwardRef, useRef, ReactNode } from 'react';
+import { useEffect, forwardRef, useRef, ReactElement, useMemo } from 'react';
 import { useGLTF, useAnimations } from '@react-three/drei';
 import * as THREE from 'three';
-import { RGroupProps, RMeshProps, ManagedGLBProps, GLTFResult } from './types';
+import { Object3DNode } from '@react-three/fiber';
+import { ManagedGLBProps, GLTFResult } from './types';
 import { getCustom, extructProps } from './utils';
 
 export const ManagedGLB = forwardRef<THREE.Object3D, ManagedGLBProps>((props, fwdRef) => {
@@ -30,9 +31,10 @@ export const ManagedGLB = forwardRef<THREE.Object3D, ManagedGLBProps>((props, fw
     sceneRef.current = element;
   };
 
-  const renderNode = (node: THREE.Object3D): ReactNode | null => {
+  const renderNode = (node: THREE.Object3D): ReactElement | null => {
     const customRender = getCustom(node.name, custom);
 
+    // some props for the root node, will empty when node is not root
     const extraProps =
       node.name === scene.name ? { ...props, ref: setSceneRefs, dispose: null } : {};
 
@@ -43,29 +45,43 @@ export const ManagedGLB = forwardRef<THREE.Object3D, ManagedGLBProps>((props, fw
       ...extraProps
     };
 
-    const RGroup = forwardRef<RGroupProps, RGroupProps>(({ children, ...prs }, ref) => {
-      return (
-        <group ref={ref} key={node.name} {...nodeProps} {...prs}>
-          {renderChildren()}
-          {children}
-        </group>
-      );
-    });
+    const RGroup = useMemo(
+      () =>
+        forwardRef<THREE.Group, Object3DNode<THREE.Group, typeof THREE.Group>>(
+          ({ children, ...prs }, ref) => {
+            return (
+              <group ref={ref} key={node.name} {...nodeProps} {...prs}>
+                {renderChildren()}
+                {children}
+              </group>
+            );
+          }
+        ),
+      [node.name, nodeProps]
+    );
 
-    const RMesh = forwardRef<RMeshProps, RMeshProps>(({ children, ...prs }, ref) => (
-      <mesh ref={ref} key={node.name} {...nodeProps} {...prs}>
-        {renderChildren()}
-        {children}
-      </mesh>
-    ));
+    const RMesh = useMemo(
+      () =>
+        forwardRef<THREE.Mesh, Object3DNode<THREE.Mesh, typeof THREE.Mesh>>(
+          ({ children, ...prs }, ref) => (
+            <mesh ref={ref} key={node.name} {...nodeProps} {...prs}>
+              {renderChildren()}
+              {children}
+            </mesh>
+          )
+        ),
+      [node.name, nodeProps]
+    );
 
     const renderChildren = () => node.children.map(renderNode);
 
     if (node instanceof THREE.Mesh) {
-      return customRender ? customRender(RMesh, node) : <RMesh />;
+      const result = customRender ? customRender(RMesh, node) : null;
+      return result ?? <RMesh />;
     }
 
-    return customRender ? customRender(RGroup, node) : <RGroup />;
+    const result = customRender ? customRender(RGroup, node) : null;
+    return result ?? <RGroup />;
   };
 
   return renderNode(scene);

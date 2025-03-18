@@ -1,17 +1,8 @@
-import { ReactNode, FC } from 'react';
+import { FC, ReactElement } from 'react';
 import * as THREE from 'three';
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 
-export interface RGroupProps {
-  children?: ReactNode;
-  [key: string]: any; // TODO: provide THREE.Object3D props
-}
-
-export interface RMeshProps {
-  children?: ReactNode;
-  [key: string]: any; // TODO: provide THREE.Object3D props
-}
-
+// TODO: make it as extension of Object3DNode?
 export interface ManagedGLBProps {
   path: string;
   custom?: Custom;
@@ -19,11 +10,11 @@ export interface ManagedGLBProps {
   castShadow?: boolean;
   receiveShadow?: boolean;
   debug?: boolean;
-  [key: string]: any; // TODO: provide THREE.Object3D props
+  [key: string]: any;
 }
 
 export type Custom = {
-  [key: string]: (Node: FC, node: THREE.Object3D) => ReactNode | null;
+  [key: string]: (Node: FC, node: THREE.Object3D) => ReactElement | null;
 };
 
 export type GLTFResult = GLTF & {

@@ -22,6 +22,7 @@ describe('ManagedGLB', () => {
     expect(container).toBeDefined();
   });
 
+  // TODO: add test glb file
   it('calls onInit when scene is loaded', () => {
     const onInit = vi.fn();
     render(<ManagedGLB path="/test.glb" onInit={onInit} />);
