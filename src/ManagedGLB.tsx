@@ -75,7 +75,7 @@ export const ManagedGLB = forwardRef<THREE.Object3D, ManagedGLBProps>((props, fw
 
     const renderChildren = () => node.children.map(renderNode);
 
-    if (node instanceof THREE.Mesh) {
+    if ('isMesh' in node && node.isMesh) {
       const result = customRender ? customRender(RMesh, node) : null;
       return result ?? <RMesh />;
     }
