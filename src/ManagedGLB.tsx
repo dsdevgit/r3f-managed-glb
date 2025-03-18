@@ -1,17 +1,14 @@
 import React, { useEffect, forwardRef, useRef, ReactNode } from 'react';
 import { useGLTF, useAnimations } from '@react-three/drei';
 import * as THREE from 'three';
-import { RGroupProps, RMeshProps, ManagedGLBProps } from './types';
+import { RGroupProps, RMeshProps, ManagedGLBProps, GLTFResult } from './types';
 import { getCustom, extructProps } from './utils';
-
-export const preloadGLB = (glb: string) => useGLTF.preload(glb);
 
 export const ManagedGLB = forwardRef<THREE.Object3D, ManagedGLBProps>((props, fwdRef) => {
   const { custom = {}, path, debug, onInit, castShadow = true, recieveShadow = true } = props;
   const sceneRef = useRef<THREE.Object3D | null>(null);
-
-  // @ts-ignore
-  const { scene, animations } = useGLTF(path);
+  const gltf = useGLTF(path) as unknown as GLTFResult;
+  const { scene, animations } = gltf;
   const { actions } = useAnimations(animations, sceneRef);
 
   useEffect(() => {
@@ -22,9 +19,14 @@ export const ManagedGLB = forwardRef<THREE.Object3D, ManagedGLBProps>((props, fw
 
   if (debug) console.log(scene);
 
-  const setSceneRefs = (element: THREE.Object3D) => {
-    // @ts-ignore
-    if (fwdRef) fwdRef.current = element;
+  const setSceneRefs = (element: THREE.Object3D | null) => {
+    if (fwdRef) {
+      if (typeof fwdRef === 'function') {
+        fwdRef(element);
+      } else {
+        fwdRef.current = element;
+      }
+    }
     sceneRef.current = element;
   };
 
@@ -58,8 +60,8 @@ export const ManagedGLB = forwardRef<THREE.Object3D, ManagedGLBProps>((props, fw
     ));
 
     const renderChildren = () => node.children.map(renderNode);
-    // @ts-ignore
-    if (node.isMesh) {
+
+    if (node instanceof THREE.Mesh) {
       return customRender ? customRender(RMesh, node) : <RMesh />;
     }
 

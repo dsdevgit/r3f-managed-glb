@@ -1,16 +1,16 @@
 import { Custom } from './types';
 import * as THREE from 'three';
+import { useGLTF } from '@react-three/drei';
+
+export const preloadGLB = (glb: string) => useGLTF.preload(glb);
 
 export const extructProps = (node: THREE.Object3D) => {
-  // return node;
-  return {
+  const baseProps = {
     name: node.name,
     animations: node.animations,
     position: node.position,
     rotation: node.rotation,
     scale: node.scale,
-    // @ts-ignore
-    material: node.material,
     userData: node.userData,
     matrix: node.matrix,
     matrixAutoUpdate: node.matrixAutoUpdate,
@@ -23,10 +23,18 @@ export const extructProps = (node: THREE.Object3D) => {
     // quaternion: node.quaternion, // breaks setting rotation via props.rotation
     up: node.up,
     visible: node.visible,
-    uuid: node.uuid,
-    // @ts-ignore
-    geometry: node.geometry
+    uuid: node.uuid
   };
+
+  if (node instanceof THREE.Mesh) {
+    return {
+      ...baseProps,
+      material: node.material,
+      geometry: node.geometry
+    };
+  }
+
+  return baseProps;
 };
 
 export const isIncluded = (name: string, string: string) => {
