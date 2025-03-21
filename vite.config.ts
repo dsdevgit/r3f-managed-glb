@@ -3,11 +3,12 @@ import react from '@vitejs/plugin-react';
 import dts from 'vite-plugin-dts';
 
 export default defineConfig({
-  plugins: [react(), dts()],
+  plugins: [react(), dts({ insertTypesEntry: true })],
   build: {
     lib: {
       entry: './src/index.ts',
       name: 'ManagedGLB',
+      formats: ['es', 'umd'],
       fileName: (format) => `index.${format}.js`
     },
     rollupOptions: {
@@ -16,9 +17,9 @@ export default defineConfig({
         globals: {
           react: 'React',
           'react-dom': 'ReactDOM',
+          three: 'THREE',
           '@react-three/fiber': 'ReactThreeFiber',
-          '@react-three/drei': 'ReactThreeDrei',
-          three: 'THREE'
+          '@react-three/drei': 'Drei'
         }
       }
     }
