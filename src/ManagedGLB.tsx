@@ -45,24 +45,32 @@ export const ManagedGLB = forwardRef<THREE.Object3D, ManagedGLBProps>((props, fw
       ...extraProps
     };
 
-    const RGroup = forwardRef<THREE.Group, Object3DNode<THREE.Group, typeof THREE.Group>>(
-      ({ children, ...prs }, ref) => {
-        return (
-          <group ref={ref} key={node.name} {...nodeProps} {...prs}>
-            {renderChildren()}
-            {children}
-          </group>
-        );
-      }
+    const RGroup = useMemo(
+      () =>
+        forwardRef<THREE.Group, Object3DNode<THREE.Group, typeof THREE.Group>>(
+          ({ children, ...prs }, ref) => {
+            return (
+              <group ref={ref} key={node.name} {...nodeProps} {...prs}>
+                {renderChildren()}
+                {children}
+              </group>
+            );
+          }
+        ),
+      [node.name, nodeProps]
     );
 
-    const RMesh = forwardRef<THREE.Mesh, Object3DNode<THREE.Mesh, typeof THREE.Mesh>>(
-      ({ children, ...prs }, ref) => (
-        <mesh ref={ref} key={node.name} {...nodeProps} {...prs}>
-          {renderChildren()}
-          {children}
-        </mesh>
-      )
+    const RMesh = useMemo(
+      () =>
+        forwardRef<THREE.Mesh, Object3DNode<THREE.Mesh, typeof THREE.Mesh>>(
+          ({ children, ...prs }, ref) => (
+            <mesh ref={ref} key={node.name} {...nodeProps} {...prs}>
+              {renderChildren()}
+              {children}
+            </mesh>
+          )
+        ),
+      [node.name, nodeProps]
     );
 
     const renderChildren = () => node.children.map(renderNode);
