@@ -1,4 +1,4 @@
-import React, { useEffect, forwardRef, useRef, ReactNode } from 'react';
+import React, { Fragment, forwardRef, useEffect, useRef, ReactNode } from 'react';
 import { useGLTF, useAnimations } from '@react-three/drei';
 import * as THREE from 'three';
 import { RGroupProps, RMeshProps, ManagedGLBProps } from './types';
@@ -28,7 +28,10 @@ export const ManagedGLB = forwardRef<THREE.Object3D, ManagedGLBProps>((props, fw
     sceneRef.current = element;
   };
 
-  const renderNode = (node: THREE.Object3D): ReactNode | null => {
+  const renderNode = (node: THREE.Object3D): ReactNode => {
+    // uuid as key: stable and unique even for unnamed or duplicated nodes
+    const key = node.uuid;
+
     const customRender = getCustom(node.name, custom);
 
     const extraProps =
@@ -36,34 +39,43 @@ export const ManagedGLB = forwardRef<THREE.Object3D, ManagedGLBProps>((props, fw
 
     const nodeProps = {
       ...extractProps(node),
-      ...castShadow,
-      ...receiveShadow,
+      castShadow,
+      receiveShadow,
       ...extraProps
     };
 
-    const RGroup = forwardRef<THREE.Group, RGroupProps>(({ children, ...prs }, ref) => {
-      return (
-        <group ref={ref} key={node.name} {...nodeProps} {...prs}>
-          {renderChildren()}
-          {children}
-        </group>
-      );
-    });
+    const RGroup = forwardRef<THREE.Group, RGroupProps>(({ children, ...prs }, ref) => (
+      <group ref={ref} {...nodeProps} {...prs}>
+        {renderChildren()}
+        {children}
+      </group>
+    ));
 
     const RMesh = forwardRef<THREE.Mesh, RMeshProps>(({ children, ...prs }, ref) => (
-      <mesh ref={ref} key={node.name} {...nodeProps} {...prs}>
+      <mesh ref={ref} {...nodeProps} {...prs}>
         {renderChildren()}
         {children}
       </mesh>
     ));
 
     const renderChildren = () => node.children.map(renderNode);
+
+    // the key must live on the element that is returned into the
+    // array, not on the inner host element, otherwise React warns about missing keys
     // @ts-ignore
     if (node.isMesh) {
-      return customRender ? customRender(RMesh, node) : <RMesh />;
+      return customRender ? (
+        <Fragment key={key}>{customRender(RMesh, node)}</Fragment>
+      ) : (
+        <RMesh key={key} />
+      );
     }
 
-    return customRender ? customRender(RGroup, node) : <RGroup />;
+    return customRender ? (
+      <Fragment key={key}>{customRender(RGroup, node)}</Fragment>
+    ) : (
+      <RGroup key={key} />
+    );
   };
 
   return renderNode(scene);

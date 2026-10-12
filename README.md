@@ -20,7 +20,7 @@ import { ManagedGLB, meshesInNodeByCount, preloadGLB } from 'r3f-managed-glb';
 
 // ....
 
-return <ManagedGLB castShadows recieveShadows path={glb} custom={custom} {...props} />;
+return <ManagedGLB castShadow receiveShadow path={glb} custom={custom} {...props} />;
 ```
 
 ```typescript
@@ -113,7 +113,7 @@ export const MyModel = (props) => {
     }
   };
 
-  return <ManagedGLB castShadows recieveShadows path={glb} custom={custom} {...props} />;
+  return <ManagedGLB castShadow receiveShadow path={glb} custom={custom} {...props} />;
 };
 
 preloadGLB(glb); // optional, just useGLTF.preload() function
@@ -137,7 +137,7 @@ export const Anim = ({ parts, ...props }) => {
   return (
     <ManagedGLB
       onInit={({ actions }) => (actionsRef.current = actions)}
-      src={glb}
+      path={glb}
       custom={custom}
       {...props}
     />
@@ -151,3 +151,12 @@ export const Anim = ({ parts, ...props }) => {
 2. `cd r3f-managed-glb`
 3. `yarn`
 4. `yarn build`
+
+# Tests
+
+1. `yarn test` — run unit tests (vitest)
+2. `yarn test:watch` — run unit tests in watch mode
+3. `yarn typecheck` — type check the project without emitting
+
+The component tests mock `@react-three/drei` (`useGLTF`/`useAnimations`) and render the resulting
+`group`/`mesh` tree with `react-test-renderer`, so no WebGL context is required.

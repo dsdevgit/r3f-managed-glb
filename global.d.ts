@@ -1,5 +1,4 @@
 import 'react';
-import 'react-dom';
 import * as THREE from 'three';
 import * as ReactThreeFiber from '@react-three/fiber';
 

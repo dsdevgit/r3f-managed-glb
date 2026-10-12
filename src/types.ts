@@ -15,7 +15,11 @@ export interface RMeshProps {
 export interface ManagedGLBProps {
   path: string;
   custom?: Custom;
-  onInit?: () => void;
+  onInit?: (init: {
+    scene: THREE.Object3D;
+    animations: THREE.AnimationClip[];
+    actions: Record<string, THREE.AnimationAction>;
+  }) => void;
   castShadow?: boolean;
   receiveShadow?: boolean;
   debug?: boolean;

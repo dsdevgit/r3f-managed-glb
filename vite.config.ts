@@ -2,28 +2,28 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import dts from 'vite-plugin-dts';
 
+// the host project already ships with all of these — never bundle
+// the list of external deps that are kept external to the build output
+const externals = ['react', 'react/jsx-runtime', '@react-three/fiber', '@react-three/drei', 'three'];
+
 export default defineConfig({
-  plugins: [react(), dts()],
+  plugins: [
+    react(),
+    dts({
+      exclude: ['**/*.test.ts', '**/*.test.tsx']
+    })
+  ],
   build: {
     lib: {
       entry: './src/index.ts',
-      name: 'ManagedGLB',
+      formats: ['es', 'cjs'],
       fileName: (format) => `index.${format}.js`
     },
     rollupOptions: {
-      external: ['react', 'react-dom', '@react-three/fiber', '@react-three/drei', 'three'],
-      output: {
-        globals: {
-          react: 'React',
-          'react-dom': 'ReactDOM',
-          '@react-three/fiber': 'ReactThreeFiber',
-          '@react-three/drei': 'ReactThreeDrei',
-          three: 'THREE'
-        }
-      }
+      external: externals
     }
   },
   optimizeDeps: {
-    exclude: ['react', 'react-dom', '@react-three/fiber', '@react-three/drei', 'three']
+    exclude: externals
   }
 });
