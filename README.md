@@ -2,8 +2,7 @@
 
 # Managed GLB for React Three Fiber
 
-Wrapper around the gbl/gltf loader that allows handling and customizing only selected nodes in JSX
-instead of generating the full JSX file.
+A lightweight wrapper around the GLB/GLTF loader for declarative management and customization of selected nodes in JSX. Instead of generating huge boilerplate files via gltfjsx or imperatively traversing the Three.js scene, you only declare overrides for the specific meshes or groups you need.
 
 # Installation
 
